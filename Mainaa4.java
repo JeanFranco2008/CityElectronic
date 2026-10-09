@@ -3,10 +3,12 @@ import java.util.Scanner;
 import Model.Administrador;
 import Menus.OpcionInicio;
 import Menus.OpcionesAdministrador;
+import Menus.OpcionesCliente;
 import Servicios.GestionProductos;
 
 public class Mainaa4 {
     public static void main(String[] args) {
+        OpcionesCliente opcionC = new OpcionesCliente();
         OpcionInicio opcionOrigen = new OpcionInicio();
         OpcionesAdministrador opcion = new OpcionesAdministrador();
         GestionProductos agregar = new GestionProductos();
@@ -77,7 +79,19 @@ public class Mainaa4 {
             } while (opcion.getOpcionAdmin() != 5);
 
         } else if (opcionOrigen.getOpcion() == 2) {
+            do {
+                opcionC.opcionesCliente(teclado);
+                if (opcionC.getOpcionCliente() == 1) {
+                    System.out.println("==== OPCION 1: VER INFORMACION DE PRODUCTOS ====");
+                    opcionC.seleccionProducto(teclado);
+                } else if (opcionC.getOpcionCliente() == 2) {
+                    System.out.println("==== OPCION 2: HACER UNA COMPRA ====");
 
+                } else if (opcionC.getOpcionCliente() == 3) {
+                    System.out.println("==== OPCION 3: ELIMINAR UNA COMPRA ====");
+
+                }
+            } while (opcionC.getOpcionCliente() != 4);
         }
     }
 }
