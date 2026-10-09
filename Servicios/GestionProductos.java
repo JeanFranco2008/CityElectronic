@@ -4,13 +4,14 @@ import java.util.Scanner;
 
 import Model.Celular;
 import Model.Laptop;
+import Model.Producto;
 import Model.Tablet;
 
 public class GestionProductos {
 
-    private Celular[] producto1;
-    private Tablet[] producto2;
-    private Laptop[] producto3;
+    private Producto[] producto1;
+    private Producto[] producto2;
+    private Producto[] producto3;
     private int cantidadProductos1;
     private int cantidadProductos2;
     private int cantidadProductos3;

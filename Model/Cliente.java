@@ -19,24 +19,4 @@ public class Cliente {
         return edad;
     }
 
-    public void validacionCliente(Scanner teclado) {
-        System.out.println("==================");
-        System.out.println("= INICIAR SESION =");
-        System.out.println("==================");
-        System.out.print("Ingrese su nombre: ");
-        nombre = teclado.nextLine();
-        teclado.nextLine();
-
-        do {
-
-            System.out.print("Ingrese su edad: ");
-            edad = teclado.nextInt();
-            if (edad < 18) {
-                System.out.println("Lo sentimos " + nombre + " solo atendemos mayores de edad.");
-            } else {
-                System.out.println("Bienvenido " + nombre);
-            }
-        } while (edad < 18);
-
-    }
 }

@@ -15,6 +15,7 @@ public class OpcionesCliente {
         System.out.println("2. Agregar un producto al carrito");
         System.out.println("3. Eliminar un producto del carrito ");
         System.out.println("4. Pagar compra");
+        System.out.println("5. Cerrar sesion como cliente ");
         opcionCliente = teclado.nextInt();
     }
 
