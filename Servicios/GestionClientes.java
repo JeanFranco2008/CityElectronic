@@ -5,7 +5,7 @@ import java.util.Scanner;
 import Model.Cliente;
 
 public class GestionClientes {
-    private Cliente[] clientesRegistro = new Cliente[2];
+    private Cliente[] clientesRegistro = new Cliente[5];
     private int posicionCliente = 0;
 
     public int getPosicionCliente() {
@@ -13,7 +13,7 @@ public class GestionClientes {
     }
 
     public void validacionCliente(Scanner teclado) {
-        if (posicionCliente < 2) {
+        if (posicionCliente < 5) {
             int edad;
             System.out.println("==================");
             System.out.println("= INICIAR SESION =");

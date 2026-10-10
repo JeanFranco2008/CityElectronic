@@ -22,9 +22,10 @@ public class Mainaa4 {
         do {
             opcionOrigen.opcionesInicio(teclado);
             if (opcionOrigen.getOpcion() == 1) {
+                admin.validacionAdmin(teclado);
 
                 do {
-                    admin.validacionAdmin(teclado);
+
                     // Se le muestra al administrador las 5 opciones que tiene
                     opcion.opcionesAdmin(teclado);
                     // Este es el proceso de la opción 1 "Agregar Producto"
@@ -85,12 +86,24 @@ public class Mainaa4 {
 
             } else if (opcionOrigen.getOpcion() == 2) {
                 do {
-                    if (cliente.getPosicionCliente() < 2) {
-                        cliente.validacionCliente(teclado);
+                    cliente.validacionCliente(teclado);
+                    if (cliente.getPosicionCliente() < 5) {
+
                         opcionC.opcionesCliente(teclado);
                         if (opcionC.getOpcionCliente() == 1) {
-                            System.out.println("==== OPCION 1: VER INFORMACION DE PRODUCTOS ====");
-                            opcionC.seleccionProducto(teclado);
+                            do {
+                                System.out.println("==== OPCION 1: VER INFORMACION DE PRODUCTOS ====");
+                                opcionC.seleccionProducto(teclado);
+                                opcionC.opcionesCliente(teclado);
+                                if (opcionC.getOpcionCliente() == 1) {
+                                    agregar.mostrarInformacionCelular(teclado);
+                                } else if (opcionC.getOpcionCliente() == 2) {
+                                    agregar.mostrarInformacionLaptop(teclado);
+                                } else if (opcionC.getOpcionCliente() == 3) {
+                                    agregar.mostrarInformacionTablet(teclado);
+                                }
+                            } while (opcionC.getOpcionCliente() != 4);
+
                         } else if (opcionC.getOpcionCliente() == 2) {
                             System.out.println("==== OPCION 2: HACER UNA COMPRA ====");
 
