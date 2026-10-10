@@ -7,7 +7,7 @@ public class OpcionesAdministrador {
     private int opcionAdmin = 0;
 
     public void opcionesAdmin(Scanner teclado) {
-        System.out.println("Elija uno opcion de administrador: ");
+        System.out.println("===== Elija una opcion de administrador: =====");
         System.out.println("1. Agregar Producto");
         System.out.println("2. Actualizar Stock");
         System.out.println("3. Eliminar Producto");

@@ -8,6 +8,10 @@ public class GestionClientes {
     private Cliente[] clientesRegistro = new Cliente[5];
     private int posicionCliente = 0;
 
+    public Cliente[] getClientesRegistro() {
+        return clientesRegistro;
+    }
+
     public int getPosicionCliente() {
         return posicionCliente;
     }
@@ -39,10 +43,6 @@ public class GestionClientes {
                 }
             } while (edad < 18);
         }
-
-    }
-
-    public void MostrarCliente() {
 
     }
 

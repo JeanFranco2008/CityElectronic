@@ -19,4 +19,10 @@ public class Cliente {
         return edad;
     }
 
+    public void mostrarDatoscliente() {
+        System.out.println("==== CLIENTE ====");
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Edad: " + edad);
+    }
+
 }

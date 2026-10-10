@@ -1,8 +1,8 @@
-import java.sql.ClientInfoStatus;
+
 import java.util.Scanner;
 
 import Model.Administrador;
-import Model.Cliente;
+
 import Menus.OpcionInicio;
 import Menus.OpcionesAdministrador;
 import Menus.OpcionesCliente;
@@ -11,11 +11,13 @@ import Servicios.GestionClientes;
 
 public class Mainaa4 {
     public static void main(String[] args) {
+
         GestionClientes cliente = new GestionClientes();
         OpcionesCliente opcionC = new OpcionesCliente();
         OpcionInicio opcionOrigen = new OpcionInicio();
         OpcionesAdministrador opcion = new OpcionesAdministrador();
         GestionProductos agregar = new GestionProductos();
+
         Administrador admin = new Administrador();
         Scanner teclado = new Scanner(System.in);
         System.err.println("===== BIENVENIDO A CITYELECTRONIC =====");
@@ -85,16 +87,14 @@ public class Mainaa4 {
                 } while (opcion.getOpcionAdmin() != 5);
 
             } else if (opcionOrigen.getOpcion() == 2) {
+                cliente.validacionCliente(teclado);
                 do {
-                    cliente.validacionCliente(teclado);
                     if (cliente.getPosicionCliente() < 5) {
-
                         opcionC.opcionesCliente(teclado);
                         if (opcionC.getOpcionCliente() == 1) {
                             do {
                                 System.out.println("==== OPCION 1: VER INFORMACION DE PRODUCTOS ====");
                                 opcionC.seleccionProducto(teclado);
-                                opcionC.opcionesCliente(teclado);
                                 if (opcionC.getOpcionCliente() == 1) {
                                     agregar.mostrarInformacionCelular(teclado);
                                 } else if (opcionC.getOpcionCliente() == 2) {
@@ -105,10 +105,20 @@ public class Mainaa4 {
                             } while (opcionC.getOpcionCliente() != 4);
 
                         } else if (opcionC.getOpcionCliente() == 2) {
-                            System.out.println("==== OPCION 2: HACER UNA COMPRA ====");
+                            do {
+                                System.out.println("==== OPCION 2: AGREGAR UN PRODUCTO AL CARRITO ====");
+                                opcionC.seleccionProducto(teclado);
+                                if (opcionC.getOpcionCliente() == 1) {
+
+                                } else if (opcionC.getOpcionCliente() == 2) {
+
+                                } else if (opcionC.getOpcionCliente() == 3) {
+
+                                }
+                            } while (opcionC.getOpcionCliente() == 2);
 
                         } else if (opcionC.getOpcionCliente() == 3) {
-                            System.out.println("==== OPCION 3: ELIMINAR UNA COMPRA ====");
+                            System.out.println("==== OPCION 3: ELIMINAR UN PRODUCTO DEL CARRITO ====");
 
                         } else if (opcionC.getOpcionCliente() == 4) {
                             System.out.println("==== OPCION 4: PAGAR COMPRA ====");

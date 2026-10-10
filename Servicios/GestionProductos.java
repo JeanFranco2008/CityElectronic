@@ -11,10 +11,35 @@ public class GestionProductos {
 
     private Producto[] producto1;
     private Producto[] producto2;
+
+    public Producto[] getProducto1() {
+        return producto1;
+    }
+
+    public Producto[] getProducto2() {
+        return producto2;
+    }
+
+    public Producto[] getProducto3() {
+        return producto3;
+    }
+
     private Producto[] producto3;
     private int cantidadProductos1;
     private int cantidadProductos2;
     private int cantidadProductos3;
+
+    public int getCantidadProductos1() {
+        return cantidadProductos1;
+    }
+
+    public int getCantidadProductos2() {
+        return cantidadProductos2;
+    }
+
+    public int getCantidadProductos3() {
+        return cantidadProductos3;
+    }
 
     public GestionProductos() {
         producto1 = new Celular[3];

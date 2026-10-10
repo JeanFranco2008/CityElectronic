@@ -10,7 +10,7 @@ public class OpcionInicio {
     }
 
     public void opcionesInicio(Scanner teclado) {
-        System.out.println("Si usted es admnistrador o cliente, elija una opción:");
+        System.out.println("===== Si usted es admnistrador o cliente, elija una opción: =====");
         System.out.println("1. Administrador");
         System.out.println("2. Cliente");
         System.out.println("3. Vendedor");
