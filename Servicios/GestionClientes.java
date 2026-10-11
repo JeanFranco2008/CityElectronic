@@ -1,7 +1,12 @@
 package Servicios;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import Configuracion.Conexion;
 import Model.Cliente;
 
 public class GestionClientes {
@@ -49,6 +54,38 @@ public class GestionClientes {
         posicionCliente++;
 
         System.out.println("Bienvenido " + nombre);
+    }
+
+    public int registrarClienteBD(Cliente cliente) {
+
+        String sql = "INSERT INTO clientes (nombre, edad) VALUES (?, ?)";
+
+        try (Connection conexion = Conexion.conectar();
+                PreparedStatement consulta = conexion.prepareStatement(
+                        sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            consulta.setString(1, cliente.getNombre());
+            consulta.setInt(2, cliente.getEdad());
+
+            consulta.executeUpdate();
+
+            try (ResultSet resultado = consulta.getGeneratedKeys()) {
+                if (resultado.next()) {
+                    int idCliente = resultado.getInt(1);
+
+                    cliente.setIdCliente(idCliente);
+
+                    System.out.println("Cliente registrado en MySQL.");
+                    return idCliente;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println(
+                    "Error al registrar cliente: " + e.getMessage());
+        }
+
+        return -1;
     }
 
 }

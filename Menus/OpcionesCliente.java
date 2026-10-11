@@ -15,7 +15,7 @@ public class OpcionesCliente {
     }
 
     public void opcionesCliente(Scanner teclado) {
-        System.out.println("===== Elija uno opcion de cliente: =====");
+        System.out.println("=====    MENU CLIENTE    =====");
         System.out.println("1. Ver informacion de productos");
         System.out.println("2. Agregar un producto al carrito");
         System.out.println("3. Eliminar un producto del carrito ");

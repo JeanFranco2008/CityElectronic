@@ -22,11 +22,11 @@ public class Mainaa4 {
         OpcionesAdministrador opcion = new OpcionesAdministrador();
         GestionProductos agregar = new GestionProductos();
         GestionVentas ventas = new GestionVentas();
-
         Administrador admin = new Administrador();
         Scanner teclado = new Scanner(System.in);
         System.err.println("===== BIENVENIDO A CITYELECTRONIC =====");
         do {
+            // ADMINISTRADOR
             opcionOrigen.opcionesInicio(teclado);
             if (opcionOrigen.getOpcion() == 1) {
                 admin.validacionAdmin(teclado);
@@ -73,7 +73,7 @@ public class Mainaa4 {
                             } else if (opcion.getOpcionAdmin() == 3) {
                                 agregar.eliminarTablet(teclado);
                             }
-                        } while (opcion.getOpcionAdmin() == 4);
+                        } while (opcion.getOpcionAdmin() != 4);
                     } else if (opcion.getOpcionAdmin() == 4) {
                         do {
                             System.out.println("==== OPCION 4: LISTAR PRODUCTO ====");
@@ -86,13 +86,31 @@ public class Mainaa4 {
                                 agregar.mostrarInformacionTablet(teclado);
                             }
 
-                        } while (opcion.getOpcionAdmin() == 4);
+                        } while (opcion.getOpcionAdmin() != 4);
+
+                    } else if (opcion.getOpcionAdmin() == 5) {
+
+                        System.out.println("==== OPCION 5: HISTORIAL DE VENTAS ====");
+                        ventas.mostrarHistorialVentas();
+
+                    } else if (opcion.getOpcionAdmin() == 6) {
+
+                        System.out.println("==== OPCION 6: BUSCAR VENTA POR CODIGO ====");
+                        ventas.buscarVentaPorCodigo(teclado);
 
                     }
-                } while (opcion.getOpcionAdmin() != 5);
+                } while (opcion.getOpcionAdmin() != 7);
 
             } else if (opcionOrigen.getOpcion() == 2) {
+                // CLIENTE
+
                 cliente.validacionCliente(teclado);
+
+                // Verificar si se registro un cliente
+                if (cliente.getPosicionCliente() == 0) {
+                    continue;
+                }
+
                 int posicionActual = cliente.getPosicionCliente() - 1;
 
                 Cliente clienteActual = cliente.getClientesRegistro()[posicionActual];
@@ -117,7 +135,7 @@ public class Mainaa4 {
                         } else if (opcionC.getOpcionCliente() == 2) {
 
                             do {
-                                System.out.println("==== AGREGAR PRODUCTO AL CARRITO ====");
+                                System.out.println("==== OPCION 2: AGREGAR PRODUCTO AL CARRITO ====");
                                 opcionC.seleccionProducto(teclado);
 
                                 Producto seleccionado = null;
@@ -144,7 +162,7 @@ public class Mainaa4 {
 
                         } else if (opcionC.getOpcionCliente() == 3) {
 
-                            System.out.println("==== ELIMINAR PRODUCTO DEL CARRITO ====");
+                            System.out.println("==== OPCION 3: ELIMINAR PRODUCTO DEL CARRITO ====");
 
                             carrito.mostrarCarrito();
 
@@ -156,7 +174,7 @@ public class Mainaa4 {
                             }
                         } else if (opcionC.getOpcionCliente() == 4) {
                             System.out.println("==== OPCION 4: PAGAR COMPRA ====");
-                            ventas.pagarCompra(carrito, teclado);
+                            ventas.pagarCompra(clienteActual, teclado);
                         }
                     } else {
                         System.out.println("Ya alcanzamos el limites de clientes");
@@ -164,7 +182,7 @@ public class Mainaa4 {
 
                 } while (opcionC.getOpcionCliente() != 5);
             }
-        } while (opcionOrigen.getOpcion() != 4);
+        } while (opcionOrigen.getOpcion() != 3);
 
     }
 }

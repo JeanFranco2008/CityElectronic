@@ -137,7 +137,7 @@ public class GestionProductos {
             return;
         }
         teclado.nextLine();
-        System.out.println("Nombre de la Tablet");
+        System.out.println("Nombre de la Laptop");
         String nombre = teclado.nextLine();
         System.out.println("Precio del " + nombre + ": ");
         Double precio = teclado.nextDouble();
@@ -430,7 +430,7 @@ public class GestionProductos {
             if (buscar == 0 || buscar > cantidadProductos3) {
                 System.out.println("Opcion incorrecta, vuelve a intentarlo");
             }
-        } while (buscar == 0 || buscar > cantidadProductos1);
+        } while (buscar == 0 || buscar > cantidadProductos3);
         producto3[buscar - 1].mostrarInformacion();
 
     }
@@ -458,8 +458,9 @@ public class GestionProductos {
     }
 
     public void eliminarCelular(Scanner teclado) {
-        int buscar;
-        int opcion;
+
+        cargarCelularesBD();
+
         if (cantidadProductos1 == 0) {
             System.out.println("No hay celulares registrados.");
             return;
@@ -472,6 +473,7 @@ public class GestionProductos {
                     + producto1[i].getNombre());
         }
 
+        int buscar;
         do {
             System.out.println("Ingrese la opcion del celular a eliminar:");
             buscar = teclado.nextInt();
@@ -479,37 +481,38 @@ public class GestionProductos {
             if (buscar < 1 || buscar > cantidadProductos1) {
                 System.out.println("Opcion incorrecta.");
             }
-
         } while (buscar < 1 || buscar > cantidadProductos1);
 
-        teclado.nextLine();
+        int indice = buscar - 1;
+        String nombre = producto1[indice].getNombre();
 
-        System.out.println("¿Desea eliminar "
-                + producto1[buscar - 1].getNombre() + "?");
-        System.out.println("Seleccione una opcion para confirmar:");
+        System.out.println("¿Desea eliminar " + nombre + "?");
         System.out.println("1. Si");
         System.out.println("2. No");
-        opcion = teclado.nextInt();
 
-        if (opcion == 2) {
+        int opcion = teclado.nextInt();
+
+        if (opcion != 1) {
             System.out.println("Eliminacion cancelada.");
             return;
-        } else if (opcion == 1) {
-            for (int i = buscar - 1; i < cantidadProductos1 - 1; i++) {
+        }
+
+        if (eliminarProductoBD(nombre, "Celular")) {
+
+            for (int i = indice; i < cantidadProductos1 - 1; i++) {
                 producto1[i] = producto1[i + 1];
             }
-            producto1[cantidadProductos1 - 1] = null;
 
-            cantidadProductos1--;
+            producto1[--cantidadProductos1] = null;
 
             System.out.println("Celular eliminado correctamente.");
         }
-
     }
 
     public void eliminarLaptop(Scanner teclado) {
-        int buscar;
-        int opcion;
+
+        cargarLaptopsBD();
+
         if (cantidadProductos3 == 0) {
             System.out.println("No hay laptops registradas.");
             return;
@@ -522,92 +525,97 @@ public class GestionProductos {
                     + producto3[i].getNombre());
         }
 
+        int buscar;
         do {
-            System.out.println("Ingrese la opcion de la Laptop a eliminar:");
+            System.out.println("Ingrese la opcion de la laptop a eliminar:");
             buscar = teclado.nextInt();
 
             if (buscar < 1 || buscar > cantidadProductos3) {
                 System.out.println("Opcion incorrecta.");
             }
-
         } while (buscar < 1 || buscar > cantidadProductos3);
 
-        teclado.nextLine();
+        int indice = buscar - 1;
+        String nombre = producto3[indice].getNombre();
 
-        System.out.println("¿Desea eliminar "
-                + producto3[buscar - 1].getNombre() + "?");
-        System.out.println("Seleccione una opcion para confirmar:");
+        System.out.println("¿Desea eliminar " + nombre + "?");
         System.out.println("1. Si");
         System.out.println("2. No");
-        opcion = teclado.nextInt();
 
-        if (opcion == 2) {
+        int opcion = teclado.nextInt();
+
+        if (opcion != 1) {
             System.out.println("Eliminacion cancelada.");
             return;
-        } else if (opcion == 1) {
-            for (int i = buscar - 1; i < cantidadProductos3 - 1; i++) {
-                producto3[i] = producto3[i + 1];
-            }
-            producto3[cantidadProductos3 - 1] = null;
-
-            cantidadProductos3--;
-
-            System.out.println("Celular eliminado correctamente.");
         }
 
+        if (eliminarProductoBD(nombre, "Laptop")) {
+
+            for (int i = indice; i < cantidadProductos3 - 1; i++) {
+                producto3[i] = producto3[i + 1];
+            }
+
+            producto3[--cantidadProductos3] = null;
+
+            System.out.println("Laptop eliminada correctamente.");
+        }
     }
 
     public void eliminarTablet(Scanner teclado) {
-        int buscar;
-        int opcion;
+
+        cargarTabletsBD();
+
         if (cantidadProductos2 == 0) {
             System.out.println("No hay tablets registradas.");
             return;
         }
 
-        System.out.println("===== ELIMINAR LAPTOP =====");
+        System.out.println("===== ELIMINAR TABLET =====");
 
         for (int i = 0; i < cantidadProductos2; i++) {
             System.out.println((i + 1) + ". "
                     + producto2[i].getNombre());
         }
 
+        int buscar;
         do {
-            System.out.println("Ingrese la opcion de la Laptop a eliminar:");
+            System.out.println("Ingrese la opcion de la tablet a eliminar:");
             buscar = teclado.nextInt();
 
             if (buscar < 1 || buscar > cantidadProductos2) {
                 System.out.println("Opcion incorrecta.");
             }
-
         } while (buscar < 1 || buscar > cantidadProductos2);
 
-        teclado.nextLine();
+        int indice = buscar - 1;
+        String nombre = producto2[indice].getNombre();
 
-        System.out.println("¿Desea eliminar "
-                + producto2[buscar - 1].getNombre() + "?");
-        System.out.println("Seleccione una opcion para confirmar:");
+        System.out.println("¿Desea eliminar " + nombre + "?");
         System.out.println("1. Si");
         System.out.println("2. No");
-        opcion = teclado.nextInt();
 
-        if (opcion == 2) {
+        int opcion = teclado.nextInt();
+
+        if (opcion != 1) {
             System.out.println("Eliminacion cancelada.");
             return;
-        } else if (opcion == 1) {
-            for (int i = buscar - 1; i < cantidadProductos2 - 1; i++) {
-                producto2[i] = producto2[i + 1];
-            }
-            producto2[cantidadProductos2 - 1] = null;
-
-            cantidadProductos2--;
-
-            System.out.println("Celular eliminado correctamente.");
         }
 
+        if (eliminarProductoBD(nombre, "Tablet")) {
+
+            for (int i = indice; i < cantidadProductos2 - 1; i++) {
+                producto2[i] = producto2[i + 1];
+            }
+
+            producto2[--cantidadProductos2] = null;
+
+            System.out.println("Tablet eliminada correctamente.");
+        }
     }
 
     public Producto seleccionarCelular(Scanner teclado) {
+        cargarCelularesBD();
+
         if (cantidadProductos1 == 0) {
             System.out.println("No hay celulares registrados.");
             return null;
@@ -635,6 +643,7 @@ public class GestionProductos {
     }
 
     public Producto seleccionarLaptop(Scanner teclado) {
+        cargarLaptopsBD();
         if (cantidadProductos3 == 0) {
             System.out.println("No hay laptops registradas.");
             return null;
@@ -662,6 +671,7 @@ public class GestionProductos {
     }
 
     public Producto seleccionarTablet(Scanner teclado) {
+        cargarTabletsBD();
         if (cantidadProductos2 == 0) {
             System.out.println("No hay tablets registradas.");
             return null;
@@ -817,8 +827,8 @@ public class GestionProductos {
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         String sqlLaptop = "INSERT INTO laptops "
-                + "(id_producto, procesador, ram, almacenamiento) "
-                + "VALUES (?, ?, ?, ?)";
+                + "(id_producto, procesador, ram, almacenamiento, pulgadas) "
+                + "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conexion = Conexion.conectar()) {
             conexion.setAutoCommit(false);
@@ -826,6 +836,7 @@ public class GestionProductos {
             try {
                 int idProducto;
 
+                // 1. Guardar los datos generales del producto
                 try (PreparedStatement consulta = conexion.prepareStatement(
                         sqlProducto, java.sql.Statement.RETURN_GENERATED_KEYS)) {
 
@@ -842,28 +853,34 @@ public class GestionProductos {
 
                     try (ResultSet resultado = consulta.getGeneratedKeys()) {
                         if (!resultado.next()) {
-                            throw new SQLException("No se obtuvo el ID de la laptop.");
+                            throw new SQLException(
+                                    "No se obtuvo el ID de la laptop.");
                         }
 
                         idProducto = resultado.getInt(1);
                     }
                 }
 
+                // 2. Guardar las características de la laptop
                 try (PreparedStatement consulta = conexion.prepareStatement(sqlLaptop)) {
                     consulta.setInt(1, idProducto);
                     consulta.setString(2, cpu);
                     consulta.setInt(3, ram);
                     consulta.setInt(4, almacenamiento);
+                    consulta.setDouble(5, pulgadas);
+
                     consulta.executeUpdate();
                 }
 
                 conexion.commit();
-                System.out.println("Laptop y caracteristicas guardadas en MySQL.");
+                System.out.println("Laptop y características guardadas en MySQL.");
                 return true;
 
             } catch (SQLException e) {
                 conexion.rollback();
                 throw e;
+            } finally {
+                conexion.setAutoCommit(true);
             }
 
         } catch (SQLException e) {
@@ -974,10 +991,13 @@ public class GestionProductos {
                 int megapixeles = Integer.parseInt(
                         resultado.getString("megapixeles"));
 
-                producto1[cantidadProductos1] = new Celular(
+                Celular celular = new Celular(
                         nombre, precio, stock, interes,
                         almacenamiento, ram, megapixeles);
 
+                celular.setIdProducto(resultado.getInt("id_producto"));
+
+                producto1[cantidadProductos1] = celular;
                 cantidadProductos1++;
             }
 
@@ -991,8 +1011,7 @@ public class GestionProductos {
     }
 
     public void cargarTabletsBD() {
-
-        String sql = "SELECT p.nombre, p.precio, p.stock, "
+        String sql = "SELECT p.id_producto, p.nombre, p.precio, p.stock, "
                 + "p.interes_3, p.interes_6, p.interes_9, p.interes_12, "
                 + "t.almacenamiento, t.ram "
                 + "FROM productos p "
@@ -1046,7 +1065,7 @@ public class GestionProductos {
 
     public void cargarLaptopsBD() {
 
-        String sql = "SELECT p.nombre, p.precio, p.stock, "
+        String sql = "SELECT p.id_producto, p.nombre, p.precio, p.stock, "
                 + "p.interes_3, p.interes_6, p.interes_9, p.interes_12, "
                 + "l.procesador, l.ram, l.almacenamiento, l.pulgadas "
                 + "FROM productos p "
@@ -1085,10 +1104,13 @@ public class GestionProductos {
 
                 double pulgadas = resultado.getDouble("pulgadas");
 
-                producto3[cantidadProductos3] = new Laptop(
+                Laptop laptop = new Laptop(
                         nombre, precio, stock, interes,
                         almacenamiento, ram, cpu, pulgadas);
 
+                laptop.setIdProducto(resultado.getInt("id_producto"));
+
+                producto3[cantidadProductos3] = laptop;
                 cantidadProductos3++;
             }
 
@@ -1128,6 +1150,88 @@ public class GestionProductos {
         } catch (SQLException e) {
             System.out.println("Error al actualizar stock: "
                     + e.getMessage());
+            return false;
+        }
+    }
+
+    private boolean eliminarProductoBD(String nombre, String tipo) {
+
+        String sqlBuscar = "SELECT id_producto FROM productos "
+                + "WHERE nombre = ? AND tipo = ?";
+
+        String sqlEliminarCaracteristicas;
+
+        if (tipo.equals("Celular")) {
+            sqlEliminarCaracteristicas = "DELETE FROM celulares WHERE id_producto = ?";
+        } else if (tipo.equals("Tablet")) {
+            sqlEliminarCaracteristicas = "DELETE FROM tablets WHERE id_producto = ?";
+        } else {
+            sqlEliminarCaracteristicas = "DELETE FROM laptops WHERE id_producto = ?";
+        }
+
+        String sqlEliminarProducto = "DELETE FROM productos WHERE id_producto = ?";
+
+        try (Connection conexion = Conexion.conectar()) {
+
+            conexion.setAutoCommit(false);
+
+            try {
+                int idProducto;
+
+                try (PreparedStatement consulta = conexion.prepareStatement(sqlBuscar)) {
+
+                    consulta.setString(1, nombre);
+                    consulta.setString(2, tipo);
+
+                    try (ResultSet resultado = consulta.executeQuery()) {
+
+                        if (!resultado.next()) {
+                            System.out.println(
+                                    "No se encontro el producto en MySQL.");
+                            conexion.rollback();
+                            return false;
+                        }
+
+                        idProducto = resultado.getInt("id_producto");
+
+                        if (resultado.next()) {
+                            System.out.println(
+                                    "Hay productos con el mismo nombre. "
+                                            + "No se elimino ninguno.");
+                            conexion.rollback();
+                            return false;
+                        }
+                    }
+                }
+
+                try (PreparedStatement consulta = conexion.prepareStatement(sqlEliminarCaracteristicas)) {
+
+                    consulta.setInt(1, idProducto);
+                    consulta.executeUpdate();
+                }
+
+                try (PreparedStatement consulta = conexion.prepareStatement(sqlEliminarProducto)) {
+
+                    consulta.setInt(1, idProducto);
+
+                    if (consulta.executeUpdate() != 1) {
+                        throw new SQLException(
+                                "No se pudo eliminar el producto.");
+                    }
+                }
+
+                conexion.commit();
+                System.out.println("Producto eliminado de MySQL.");
+                return true;
+
+            } catch (SQLException e) {
+                conexion.rollback();
+                throw e;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(
+                    "Error al eliminar producto: " + e.getMessage());
             return false;
         }
     }

@@ -1,6 +1,8 @@
 package Model;
 
 public abstract class Producto {
+
+    private int idProducto;
     private String nombre;
     private double precio;
     private int stock;
@@ -12,17 +14,27 @@ public abstract class Producto {
         super();
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
+    public Producto(String nombre, double precio, int stock,
+            double[] interes, int almacenamiento, int ram) {
 
-    public Producto(String nombre, double precio, int stock, double[] interes, int almacenamiento, int ram) {
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
         this.interes = interes;
         this.almacenamiento = almacenamiento;
         this.ram = ram;
+    }
+
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public int getAlmacenamiento() {
@@ -54,5 +66,4 @@ public abstract class Producto {
     }
 
     public abstract void mostrarInformacion();
-
 }
