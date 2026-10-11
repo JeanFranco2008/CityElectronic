@@ -37,6 +37,10 @@ public abstract class Producto {
         return interes;
     }
 
+    public double getInteres(int posicion) {
+        return interes[posicion];
+    }
+
     public String getNombre() {
         return nombre;
     }

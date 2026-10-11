@@ -3,10 +3,15 @@ package Menus;
 import java.util.Scanner;
 
 public class OpcionesCliente {
-    private int opcionCliente;
+    private int opcionCliente = 0;
+    private int opcionProducto = 0;
 
     public int getOpcionCliente() {
         return opcionCliente;
+    }
+
+    public int getOpcionProducto() {
+        return opcionProducto;
     }
 
     public void opcionesCliente(Scanner teclado) {
@@ -25,6 +30,7 @@ public class OpcionesCliente {
         System.out.println("2. Laptop");
         System.out.println("3. Tablet");
         System.out.println("4. Regresar");
-        opcionCliente = teclado.nextInt();
+        opcionProducto = teclado.nextInt();
     }
+
 }

@@ -8,6 +8,10 @@ import Menus.OpcionesAdministrador;
 import Menus.OpcionesCliente;
 import Servicios.GestionProductos;
 import Servicios.GestionClientes;
+import Model.CarritoCompras;
+import Model.Cliente;
+import Model.Producto;
+import Servicios.GestionVentas;
 
 public class Mainaa4 {
     public static void main(String[] args) {
@@ -17,6 +21,7 @@ public class Mainaa4 {
         OpcionInicio opcionOrigen = new OpcionInicio();
         OpcionesAdministrador opcion = new OpcionesAdministrador();
         GestionProductos agregar = new GestionProductos();
+        GestionVentas ventas = new GestionVentas();
 
         Administrador admin = new Administrador();
         Scanner teclado = new Scanner(System.in);
@@ -88,6 +93,11 @@ public class Mainaa4 {
 
             } else if (opcionOrigen.getOpcion() == 2) {
                 cliente.validacionCliente(teclado);
+                int posicionActual = cliente.getPosicionCliente() - 1;
+
+                Cliente clienteActual = cliente.getClientesRegistro()[posicionActual];
+
+                CarritoCompras carrito = clienteActual.getCarrito();
                 do {
                     if (cliente.getPosicionCliente() < 5) {
                         opcionC.opcionesCliente(teclado);
@@ -95,34 +105,58 @@ public class Mainaa4 {
                             do {
                                 System.out.println("==== OPCION 1: VER INFORMACION DE PRODUCTOS ====");
                                 opcionC.seleccionProducto(teclado);
-                                if (opcionC.getOpcionCliente() == 1) {
+                                if (opcionC.getOpcionProducto() == 1) {
                                     agregar.mostrarInformacionCelular(teclado);
-                                } else if (opcionC.getOpcionCliente() == 2) {
+                                } else if (opcionC.getOpcionProducto() == 2) {
                                     agregar.mostrarInformacionLaptop(teclado);
-                                } else if (opcionC.getOpcionCliente() == 3) {
+                                } else if (opcionC.getOpcionProducto() == 3) {
                                     agregar.mostrarInformacionTablet(teclado);
                                 }
-                            } while (opcionC.getOpcionCliente() != 4);
+                            } while (opcionC.getOpcionProducto() != 4);
 
                         } else if (opcionC.getOpcionCliente() == 2) {
+
                             do {
-                                System.out.println("==== OPCION 2: AGREGAR UN PRODUCTO AL CARRITO ====");
+                                System.out.println("==== AGREGAR PRODUCTO AL CARRITO ====");
                                 opcionC.seleccionProducto(teclado);
-                                if (opcionC.getOpcionCliente() == 1) {
 
-                                } else if (opcionC.getOpcionCliente() == 2) {
+                                Producto seleccionado = null;
 
-                                } else if (opcionC.getOpcionCliente() == 3) {
-
+                                if (opcionC.getOpcionProducto() == 1) {
+                                    seleccionado = agregar.seleccionarCelular(teclado);
+                                } else if (opcionC.getOpcionProducto() == 2) {
+                                    seleccionado = agregar.seleccionarLaptop(teclado);
+                                } else if (opcionC.getOpcionProducto() == 3) {
+                                    seleccionado = agregar.seleccionarTablet(teclado);
+                                } else if (opcionC.getOpcionProducto() != 4) {
+                                    System.out.println("Opcion incorrecta.");
                                 }
-                            } while (opcionC.getOpcionCliente() == 2);
+
+                                if (seleccionado != null) {
+                                    if (seleccionado.getStock() > 0) {
+                                        carrito.agregarProducto(seleccionado);
+                                    } else {
+                                        System.out.println("Producto sin stock disponible.");
+                                    }
+                                }
+
+                            } while (opcionC.getOpcionProducto() != 4);
 
                         } else if (opcionC.getOpcionCliente() == 3) {
-                            System.out.println("==== OPCION 3: ELIMINAR UN PRODUCTO DEL CARRITO ====");
 
+                            System.out.println("==== ELIMINAR PRODUCTO DEL CARRITO ====");
+
+                            carrito.mostrarCarrito();
+
+                            if (carrito.getCantidadProductos() > 0) {
+                                System.out.print("Ingrese el numero del producto que desea eliminar: ");
+                                int posicion = teclado.nextInt();
+
+                                carrito.eliminarProducto(posicion - 1);
+                            }
                         } else if (opcionC.getOpcionCliente() == 4) {
                             System.out.println("==== OPCION 4: PAGAR COMPRA ====");
-
+                            ventas.pagarCompra(carrito, teclado);
                         }
                     } else {
                         System.out.println("Ya alcanzamos el limites de clientes");
