@@ -758,9 +758,7 @@ public class GestionProductos {
                 int idProducto;
 
                 // 1. Guardar los datos generales
-                try (PreparedStatement consulta = conexion.prepareStatement(
-                        sqlProducto,
-                        PreparedStatement.RETURN_GENERATED_KEYS)) {
+                try (PreparedStatement consulta = conexion.prepareStatement(sqlProducto)) {
 
                     consulta.setString(1, nombre);
                     consulta.setString(2, "Celular");
@@ -774,15 +772,7 @@ public class GestionProductos {
                     consulta.executeUpdate();
 
                     // Obtener el ID generado por MySQL
-                    try (ResultSet resultado = consulta.getGeneratedKeys()) {
-
-                        if (!resultado.next()) {
-                            throw new SQLException(
-                                    "No se pudo obtener el ID del celular.");
-                        }
-
-                        idProducto = resultado.getInt(1);
-                    }
+                    idProducto = obtenerUltimoId(conexion);
                 }
 
                 // 2. Guardar las caracteristicas del celular
@@ -800,7 +790,7 @@ public class GestionProductos {
                 conexion.commit();
 
                 System.out.println(
-                        "Celular y caracteristicas guardados en MySQL.");
+                        "Celular y caracteristicas guardados en SQLite.");
 
                 return true;
 
@@ -837,12 +827,12 @@ public class GestionProductos {
                 int idProducto;
 
                 // 1. Guardar los datos generales del producto
-                try (PreparedStatement consulta = conexion.prepareStatement(
-                        sqlProducto, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+                try (PreparedStatement consulta = conexion.prepareStatement(sqlProducto)) {
 
                     consulta.setString(1, nombre);
                     consulta.setString(2, "Laptop");
                     consulta.setDouble(3, precio);
+
                     consulta.setInt(4, stock);
 
                     for (int i = 0; i < 4; i++) {
@@ -851,14 +841,7 @@ public class GestionProductos {
 
                     consulta.executeUpdate();
 
-                    try (ResultSet resultado = consulta.getGeneratedKeys()) {
-                        if (!resultado.next()) {
-                            throw new SQLException(
-                                    "No se obtuvo el ID de la laptop.");
-                        }
-
-                        idProducto = resultado.getInt(1);
-                    }
+                    idProducto = obtenerUltimoId(conexion);
                 }
 
                 // 2. Guardar las características de la laptop
@@ -873,7 +856,7 @@ public class GestionProductos {
                 }
 
                 conexion.commit();
-                System.out.println("Laptop y características guardadas en MySQL.");
+                System.out.println("Laptop y características guardadas en SQLite.");
                 return true;
 
             } catch (SQLException e) {
@@ -906,8 +889,7 @@ public class GestionProductos {
             try {
                 int idProducto;
 
-                try (PreparedStatement consulta = conexion.prepareStatement(
-                        sqlProducto, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+                try (PreparedStatement consulta = conexion.prepareStatement(sqlProducto)) {
 
                     consulta.setString(1, nombre);
                     consulta.setString(2, "Tablet");
@@ -920,13 +902,7 @@ public class GestionProductos {
 
                     consulta.executeUpdate();
 
-                    try (ResultSet resultado = consulta.getGeneratedKeys()) {
-                        if (!resultado.next()) {
-                            throw new SQLException("No se obtuvo el ID de la tablet.");
-                        }
-
-                        idProducto = resultado.getInt(1);
-                    }
+                    idProducto = obtenerUltimoId(conexion);
                 }
 
                 try (PreparedStatement consulta = conexion.prepareStatement(sqlTablet)) {
@@ -937,7 +913,7 @@ public class GestionProductos {
                 }
 
                 conexion.commit();
-                System.out.println("Tablet y caracteristicas guardadas en MySQL.");
+                System.out.println("Tablet y caracteristicas guardadas en SQLite.");
                 return true;
 
             } catch (SQLException e) {
@@ -1001,7 +977,7 @@ public class GestionProductos {
                 cantidadProductos1++;
             }
 
-            System.out.println("Celulares cargados desde MySQL: "
+            System.out.println("Celulares cargados desde SQLite:"
                     + cantidadProductos1);
 
         } catch (SQLException | NumberFormatException e) {
@@ -1047,14 +1023,15 @@ public class GestionProductos {
                 int ram = Integer.parseInt(
                         resultado.getString("ram"));
 
-                producto2[cantidadProductos2] = new Tablet(
-                        nombre, precio, stock, interes,
-                        almacenamiento, ram);
+                Tablet tablet = new Tablet(
+                        nombre, precio, stock, interes, almacenamiento, ram);
+                tablet.setIdProducto(resultado.getInt("id_producto"));
+                producto2[cantidadProductos2] = tablet;
 
                 cantidadProductos2++;
             }
 
-            System.out.println("Tablets cargadas desde MySQL: "
+            System.out.println("Tablets cargadas desde SQLite: "
                     + cantidadProductos2);
 
         } catch (SQLException | NumberFormatException e) {
@@ -1114,7 +1091,7 @@ public class GestionProductos {
                 cantidadProductos3++;
             }
 
-            System.out.println("Laptops cargadas desde MySQL: "
+            System.out.println("Laptops cargadas desde SQLite: "
                     + cantidadProductos3);
 
         } catch (SQLException | NumberFormatException e) {
@@ -1234,6 +1211,22 @@ public class GestionProductos {
                     "Error al eliminar producto: " + e.getMessage());
             return false;
         }
+    }
+
+    private int obtenerUltimoId(Connection conexion) throws SQLException {
+
+        String sql = "SELECT last_insert_rowid()";
+
+        try (PreparedStatement consulta = conexion.prepareStatement(sql);
+
+                ResultSet resultado = consulta.executeQuery()) {
+
+            if (resultado.next()) {
+                return resultado.getInt(1);
+            }
+        }
+
+        throw new SQLException("No se pudo obtener el ID.");
     }
 
 }

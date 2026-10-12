@@ -13,9 +13,9 @@ public class Administrador {
         System.out.println("= INICIAR SESION =");
         System.out.println("==================");
         do {
-            System.out.println("Ingrese su correo:");
+            System.out.print("Ingrese su correo: ");
             correoT = teclado.next();
-            System.out.println("Ingrese su contraseña:");
+            System.out.print("Ingrese su contraseña: ");
             contraT = teclado.next();
             if (correo.equals(correoT) && contraseña.equals(contraT)) {
                 System.out.println("Bienvenido administrador");

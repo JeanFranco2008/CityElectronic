@@ -61,21 +61,27 @@ public class GestionClientes {
         String sql = "INSERT INTO clientes (nombre, edad) VALUES (?, ?)";
 
         try (Connection conexion = Conexion.conectar();
-                PreparedStatement consulta = conexion.prepareStatement(
-                        sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                PreparedStatement consulta = conexion.prepareStatement(sql)) {
 
             consulta.setString(1, cliente.getNombre());
             consulta.setInt(2, cliente.getEdad());
 
             consulta.executeUpdate();
 
-            try (ResultSet resultado = consulta.getGeneratedKeys()) {
+            // Obtener el ID generado por SQLite
+            String sqlId = "SELECT last_insert_rowid()";
+
+            try (PreparedStatement consultaId = conexion.prepareStatement(sqlId);
+                    ResultSet resultado = consultaId.executeQuery()) {
+
                 if (resultado.next()) {
+
                     int idCliente = resultado.getInt(1);
 
                     cliente.setIdCliente(idCliente);
 
-                    System.out.println("Cliente registrado en MySQL.");
+                    System.out.println("Cliente registrado en SQLite.");
+
                     return idCliente;
                 }
             }

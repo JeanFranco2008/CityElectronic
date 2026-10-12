@@ -294,23 +294,15 @@ public class GestionVentas {
                 // 1. Registrar cliente
                 int idCliente;
 
-                try (PreparedStatement consultaCliente = conexion.prepareStatement(
-                        sqlCliente,
-                        PreparedStatement.RETURN_GENERATED_KEYS)) {
+                try (PreparedStatement consultaCliente = conexion.prepareStatement(sqlCliente)) {
 
                     consultaCliente.setString(1, cliente.getNombre());
                     consultaCliente.setInt(2, cliente.getEdad());
+
                     consultaCliente.executeUpdate();
 
-                    try (ResultSet resultado = consultaCliente.getGeneratedKeys()) {
-
-                        if (!resultado.next()) {
-                            throw new SQLException(
-                                    "No se obtuvo el ID del cliente.");
-                        }
-
-                        idCliente = resultado.getInt(1);
-                    }
+                    // Obtener el ID del cliente generado en SQLite
+                    idCliente = obtenerUltimoId(conexion);
                 }
 
                 cliente.setIdCliente(idCliente);
@@ -318,9 +310,7 @@ public class GestionVentas {
                 // 2. Registrar venta
                 int idVenta;
 
-                try (PreparedStatement consultaVenta = conexion.prepareStatement(
-                        sqlVenta,
-                        PreparedStatement.RETURN_GENERATED_KEYS)) {
+                try (PreparedStatement consultaVenta = conexion.prepareStatement(sqlVenta)) {
 
                     consultaVenta.setInt(1, idCliente);
                     consultaVenta.setString(2, tipoPago);
@@ -331,15 +321,8 @@ public class GestionVentas {
 
                     consultaVenta.executeUpdate();
 
-                    try (ResultSet resultado = consultaVenta.getGeneratedKeys()) {
-
-                        if (!resultado.next()) {
-                            throw new SQLException(
-                                    "No se obtuvo el ID de la venta.");
-                        }
-
-                        idVenta = resultado.getInt(1);
-                    }
+                    // Obtener el ID de la venta generado en SQLite
+                    idVenta = obtenerUltimoId(conexion);
                 }
 
                 // 3. Agrupar unidades del mismo producto
@@ -367,7 +350,7 @@ public class GestionVentas {
                         }
                     }
 
-                    // 4. Descontar stock en MySQL
+                    // 4. Descontar stock en SQLite
                     try (PreparedStatement consultaStock = conexion.prepareStatement(sqlStock)) {
 
                         consultaStock.setInt(1, unidades);
@@ -412,7 +395,7 @@ public class GestionVentas {
 
         } catch (SQLException e) {
             System.out.println(
-                    "Error de conexion con MySQL: " + e.getMessage());
+                    "Error de conexion con SQLite : " + e.getMessage());
             return false;
         }
     }
@@ -492,4 +475,18 @@ public class GestionVentas {
         }
     }
 
+    private int obtenerUltimoId(Connection conexion) throws SQLException {
+
+        String sql = "SELECT last_insert_rowid()";
+
+        try (PreparedStatement consulta = conexion.prepareStatement(sql);
+                ResultSet resultado = consulta.executeQuery()) {
+
+            if (resultado.next()) {
+                return resultado.getInt(1);
+            }
+        }
+
+        throw new SQLException("No se pudo obtener el ID.");
+    }
 }

@@ -90,10 +90,12 @@ public class Mainaa4 {
 
                     } else if (opcion.getOpcionAdmin() == 5) {
 
-                        // FRANKLIN Historial de ventas
+                        System.out.println("==== OPCION 5: HISTORIAL DE VENTAS ====");
+                        ventas.mostrarHistorialVentas();
 
                     } else if (opcion.getOpcionAdmin() == 6) {
-                        // FRANKLIN Buscas ventas por codigo
+                        System.out.println("==== OPCION 6: BUSCAR VENTA POR CODIGO ====");
+                        ventas.buscarVentaPorCodigo(teclado);
 
                     }
                 } while (opcion.getOpcionAdmin() != 7);
@@ -159,9 +161,19 @@ public class Mainaa4 {
 
                         } else if (opcionC.getOpcionCliente() == 3) {
 
-                            // Rider Eliminar producto del carrito
+                            System.out.println("==== OPCION 3: ELIMINAR PRODUCTO DEL CARRITO ====");
+
+                            carrito.mostrarCarrito();
+
+                            if (carrito.getCantidadProductos() > 0) {
+                                System.out.print("Ingrese el numero del producto que desea eliminar: ");
+                                int posicion = teclado.nextInt();
+
+                                carrito.eliminarProducto(posicion - 1);
+                            }
                         } else if (opcionC.getOpcionCliente() == 4) {
-                            // Rider Pagar compra
+                            System.out.println("==== OPCION 4: PAGAR COMPRA ====");
+                            ventas.pagarCompra(clienteActual, teclado);
                         }
                     } else {
                         System.out.println("Ya alcanzamos el limites de clientes");
