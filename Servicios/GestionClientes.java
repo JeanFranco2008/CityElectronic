@@ -1,4 +1,4 @@
-[4:33 p. m., 12/10/2026] @revivecel: package Servicios;
+package Servicios;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

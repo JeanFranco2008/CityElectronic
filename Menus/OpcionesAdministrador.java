@@ -15,6 +15,7 @@ public class OpcionesAdministrador {
         System.out.println("5. Historial de ventas");
         System.out.println("6. Buscar venta por codigo");
         System.out.println("7. Regresar");
+        System.out.print("Elige una opcion: ");
         opcionAdmin = teclado.nextInt();
     }
 
@@ -25,6 +26,7 @@ public class OpcionesAdministrador {
         System.out.println("3. Tablet");
         System.out.println("4. Regresar");
         opcionAdmin = teclado.nextInt();
+        System.out.print("Elige una opcion: ");
     }
 
     public int getOpcionAdmin() {

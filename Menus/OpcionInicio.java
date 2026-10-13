@@ -14,6 +14,7 @@ public class OpcionInicio {
         System.out.println("1. Administrador");
         System.out.println("2. Cliente");
         System.out.println("3. Salir");
+        System.out.print("Elige una opcion: ");
         opcion = teclado.nextInt();
     }
 

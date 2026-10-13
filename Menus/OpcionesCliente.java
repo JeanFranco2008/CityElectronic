@@ -21,6 +21,7 @@ public class OpcionesCliente {
         System.out.println("3. Eliminar un producto del carrito ");
         System.out.println("4. Pagar compra");
         System.out.println("5. Cerrar sesion como cliente ");
+        System.out.print("Elige una opcion: ");
         opcionCliente = teclado.nextInt();
     }
 
@@ -30,6 +31,7 @@ public class OpcionesCliente {
         System.out.println("2. Laptop");
         System.out.println("3. Tablet");
         System.out.println("4. Regresar");
+        System.out.print("Elige una opcion: ");
         opcionProducto = teclado.nextInt();
     }
 

@@ -62,22 +62,22 @@ public class GestionProductos {
             return;
         }
         teclado.nextLine();
-        System.out.println("Nombre del celular:");
+        System.out.print("Nombre del celular:");
         String nombre = teclado.nextLine();
-        System.out.println("Precio del " + nombre + ": ");
+        System.out.print("Precio del " + nombre + ": ");
         Double precio = teclado.nextDouble();
-        System.out.println("Stock del " + nombre + ": ");
+        System.out.print("Stock del " + nombre + ": ");
         int stock = teclado.nextInt();
         double[] interes = new double[4];
         for (int i = 0; i < 4; i++) {
-            System.out.println("Ingrese el interes del mes " + ((i + 1) * 3) + ":");
+            System.out.print("Ingrese el interes del mes " + ((i + 1) * 3) + ":");
             interes[i] = teclado.nextDouble();
         }
-        System.out.println("Almacenamiento del " + nombre + ": ");
+        System.out.print("Almacenamiento del " + nombre + ": ");
         int almacenamiento = teclado.nextInt();
-        System.out.println("Ram del " + nombre + ": ");
+        System.out.print("Ram del " + nombre + ": ");
         int ram = teclado.nextInt();
-        System.out.println("Megapixeles del " + nombre + ": ");
+        System.out.print("Megapixeles del " + nombre + ": ");
         int megapixeles = teclado.nextInt();
         teclado.nextLine();
 
@@ -102,20 +102,20 @@ public class GestionProductos {
             return;
         }
         teclado.nextLine();
-        System.out.println("Nombre de la Tablet");
+        System.out.print("Nombre de la Tablet");
         String nombre = teclado.nextLine();
-        System.out.println("Precio del " + nombre + ": ");
+        System.out.print("Precio del " + nombre + ": ");
         Double precio = teclado.nextDouble();
-        System.out.println("Stock del " + nombre + ": ");
+        System.out.print("Stock del " + nombre + ": ");
         int stock = teclado.nextInt();
         double[] interes = new double[4];
         for (int i = 0; i < 4; i++) {
-            System.out.println("Ingrese el interes del mes " + ((i + 1) * 3) + ":");
+            System.out.print("Ingrese el interes del mes " + ((i + 1) * 3) + ":");
             interes[i] = teclado.nextDouble();
         }
-        System.out.println("Almacenamiento del " + nombre + ": ");
+        System.out.print("Almacenamiento del " + nombre + ": ");
         int almacenamiento = teclado.nextInt();
-        System.out.println("Ram del " + nombre + ": ");
+        System.out.print("Ram del " + nombre + ": ");
         int ram = teclado.nextInt();
         teclado.nextLine();
 
@@ -137,25 +137,25 @@ public class GestionProductos {
             return;
         }
         teclado.nextLine();
-        System.out.println("Nombre de la Laptop");
+        System.out.print("Nombre de la Laptop");
         String nombre = teclado.nextLine();
-        System.out.println("Precio del " + nombre + ": ");
+        System.out.print("Precio del " + nombre + ": ");
         Double precio = teclado.nextDouble();
-        System.out.println("Stock del " + nombre + ": ");
+        System.out.print("Stock del " + nombre + ": ");
         int stock = teclado.nextInt();
         double[] interes = new double[4];
         for (int i = 0; i < 4; i++) {
-            System.out.println("Ingrese el interes del mes " + ((i + 1) * 3) + ":");
+            System.out.print("Ingrese el interes del mes " + ((i + 1) * 3) + ":");
             interes[i] = teclado.nextDouble();
         }
-        System.out.println("Almacenamiento del " + nombre + ": ");
+        System.out.print("Almacenamiento del " + nombre + ": ");
         int almacenamiento = teclado.nextInt();
-        System.out.println("Ram del " + nombre + ": ");
+        System.out.print("Ram del " + nombre + ": ");
         int ram = teclado.nextInt();
         teclado.nextLine();
-        System.out.println("CPU del " + nombre + ": ");
+        System.out.print("CPU del " + nombre + ": ");
         String cpu = teclado.nextLine();
-        System.out.println("Pulgadas del " + nombre + ": ");
+        System.out.print("Pulgadas del " + nombre + ": ");
         double pulgadas = teclado.nextDouble();
         teclado.nextLine();
 
@@ -390,8 +390,6 @@ public class GestionProductos {
 
         int buscar;
 
-        System.out.println("===== CELULARES REGISTRADOS =====");
-
         if (cantidadProductos1 == 0) {
             System.out.println("No hay celulares registrados.");
             return;
@@ -422,7 +420,7 @@ public class GestionProductos {
         }
         System.out.println("===== LAPTOPS REGISTRADAS =====");
         for (int i = 0; i < cantidadProductos3; i++) {
-            System.out.println((i + 1) + ". Celular: " + producto3[i].getNombre());
+            System.out.println((i + 1) + ". Laptop: " + producto3[i].getNombre());
         }
         do {
             System.out.println("Ingrese la opcion de la Laptop: ");
@@ -444,7 +442,7 @@ public class GestionProductos {
         }
         System.out.println("===== TABLETS REGISTRADAS =====");
         for (int i = 0; i < cantidadProductos2; i++) {
-            System.out.println((i + 1) + ". Celular: " + producto2[i].getNombre());
+            System.out.println((i + 1) + ". Tablets: " + producto2[i].getNombre());
         }
         do {
             System.out.println("Ingrese la opcion de la tablet: ");
@@ -934,7 +932,7 @@ public class GestionProductos {
                 + "c.almacenamiento, c.ram, c.megapixeles "
                 + "FROM productos p "
                 + "INNER JOIN celulares c ON p.id_producto = c.id_producto "
-                + "WHERE p.tipo = 'Celular'";
+                + "WHERE p.tipo = 'Celular' AND p.activo = 1";
 
         try (Connection conexion = Conexion.conectar();
                 PreparedStatement consulta = conexion.prepareStatement(sql);
@@ -992,7 +990,7 @@ public class GestionProductos {
                 + "t.almacenamiento, t.ram "
                 + "FROM productos p "
                 + "INNER JOIN tablets t ON p.id_producto = t.id_producto "
-                + "WHERE p.tipo = 'Tablet'";
+                + "WHERE p.tipo = 'Tablet' AND p.activo = 1";
 
         try (Connection conexion = Conexion.conectar();
                 PreparedStatement consulta = conexion.prepareStatement(sql);
@@ -1047,7 +1045,7 @@ public class GestionProductos {
                 + "l.procesador, l.ram, l.almacenamiento, l.pulgadas "
                 + "FROM productos p "
                 + "INNER JOIN laptops l ON p.id_producto = l.id_producto "
-                + "WHERE p.tipo = 'Laptop'";
+                + "WHERE p.tipo = 'Laptop' AND p.activo = 1";
 
         try (Connection conexion = Conexion.conectar();
                 PreparedStatement consulta = conexion.prepareStatement(sql);
@@ -1134,83 +1132,59 @@ public class GestionProductos {
     private boolean eliminarProductoBD(String nombre, String tipo) {
 
         String sqlBuscar = "SELECT id_producto FROM productos "
-                + "WHERE nombre = ? AND tipo = ?";
+                + "WHERE nombre = ? AND tipo = ? AND activo = 1";
 
-        String sqlEliminarCaracteristicas;
-
-        if (tipo.equals("Celular")) {
-            sqlEliminarCaracteristicas = "DELETE FROM celulares WHERE id_producto = ?";
-        } else if (tipo.equals("Tablet")) {
-            sqlEliminarCaracteristicas = "DELETE FROM tablets WHERE id_producto = ?";
-        } else {
-            sqlEliminarCaracteristicas = "DELETE FROM laptops WHERE id_producto = ?";
-        }
-
-        String sqlEliminarProducto = "DELETE FROM productos WHERE id_producto = ?";
+        String sqlEliminar = "UPDATE productos "
+                + "SET activo = 0 WHERE id_producto = ?";
 
         try (Connection conexion = Conexion.conectar()) {
 
-            conexion.setAutoCommit(false);
+            int idProducto;
 
-            try {
-                int idProducto;
+            // Buscar el producto
+            try (PreparedStatement consulta = conexion.prepareStatement(sqlBuscar)) {
 
-                try (PreparedStatement consulta = conexion.prepareStatement(sqlBuscar)) {
+                consulta.setString(1, nombre);
+                consulta.setString(2, tipo);
 
-                    consulta.setString(1, nombre);
-                    consulta.setString(2, tipo);
+                try (ResultSet resultado = consulta.executeQuery()) {
 
-                    try (ResultSet resultado = consulta.executeQuery()) {
+                    if (!resultado.next()) {
+                        System.out.println("Producto no encontrado.");
+                        return false;
+                    }
 
-                        if (!resultado.next()) {
-                            System.out.println(
-                                    "No se encontro el producto en MySQL.");
-                            conexion.rollback();
-                            return false;
-                        }
+                    idProducto = resultado.getInt("id_producto");
 
-                        idProducto = resultado.getInt("id_producto");
-
-                        if (resultado.next()) {
-                            System.out.println(
-                                    "Hay productos con el mismo nombre. "
-                                            + "No se elimino ninguno.");
-                            conexion.rollback();
-                            return false;
-                        }
+                    // Evitar eliminar si hay nombres repetidos
+                    if (resultado.next()) {
+                        System.out.println(
+                                "Hay productos con el mismo nombre.");
+                        return false;
                     }
                 }
+            }
 
-                try (PreparedStatement consulta = conexion.prepareStatement(sqlEliminarCaracteristicas)) {
+            // Desactivar el producto sin borrar su historial
+            try (PreparedStatement consulta = conexion.prepareStatement(sqlEliminar)) {
 
-                    consulta.setInt(1, idProducto);
-                    consulta.executeUpdate();
+                consulta.setInt(1, idProducto);
+
+                if (consulta.executeUpdate() == 1) {
+
+                    System.out.println(
+                            "Producto eliminado del catalogo correctamente.");
+
+                    return true;
                 }
-
-                try (PreparedStatement consulta = conexion.prepareStatement(sqlEliminarProducto)) {
-
-                    consulta.setInt(1, idProducto);
-
-                    if (consulta.executeUpdate() != 1) {
-                        throw new SQLException(
-                                "No se pudo eliminar el producto.");
-                    }
-                }
-
-                conexion.commit();
-                System.out.println("Producto eliminado de MySQL.");
-                return true;
-
-            } catch (SQLException e) {
-                conexion.rollback();
-                throw e;
             }
 
         } catch (SQLException e) {
             System.out.println(
                     "Error al eliminar producto: " + e.getMessage());
-            return false;
         }
+
+        return false;
     }
 
     private int obtenerUltimoId(Connection conexion) throws SQLException {
